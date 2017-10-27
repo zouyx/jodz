@@ -1,9 +1,10 @@
-package agollo
+package config
 
 import (
 	"io/ioutil"
 	"encoding/json"
 	"errors"
+	"github.com/jodz/utils"
 )
 
 var(
@@ -19,7 +20,7 @@ func loadJsonConfig(fileName string) (*AppConfig,error) {
 
 	appConfig,loadErr:=createAppConfigWithJson(string(fs))
 
-	if isNotNil(loadErr){
+	if utils.IsNotNil(loadErr){
 		return nil,errors.New("Load Json Config fail:" + loadErr.Error())
 	}
 
@@ -32,7 +33,7 @@ func createAppConfigWithJson(str string) (*AppConfig,error) {
 		NamespaceName:default_namespace,
 	}
 	err:=json.Unmarshal([]byte(str),appConfig)
-	if isNotNil(err) {
+	if utils.IsNotNil(err) {
 		return nil,err
 	}
 

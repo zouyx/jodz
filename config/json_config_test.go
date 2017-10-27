@@ -1,8 +1,8 @@
-package agollo
+package config
 
 import (
 	"testing"
-	"github.com/zouyx/agollo/test"
+	"github.com/jodz/test"
 )
 
 func TestLoadJsonConfig(t *testing.T) {
