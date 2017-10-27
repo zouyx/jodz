@@ -11,10 +11,7 @@ func TestLoadJsonConfig(t *testing.T) {
 
 	test.Nil(t,err)
 	test.NotNil(t,config)
-	test.Equal(t,"test",config.AppId)
-	test.Equal(t,"dev",config.Cluster)
-	test.Equal(t,"application",config.NamespaceName)
-	test.Equal(t,"localhost:8888",config.Ip)
+	test.Equal(t,"127.0.0.1:2180",config.Zk)
 
 }
 
@@ -36,7 +33,7 @@ func TestLoadJsonConfigWrongType(t *testing.T) {
 
 func TestCreateAppConfigWithJson(t *testing.T) {
 	jsonStr:=`{
-    "appId": "test",
+    "zk": "test",
     "cluster": "dev",
     "namespaceName": "application",
     "ip": "localhost:8888",
@@ -47,28 +44,8 @@ func TestCreateAppConfigWithJson(t *testing.T) {
 
 	test.Nil(t,err)
 	test.NotNil(t,config)
-	test.Equal(t,"test",config.AppId)
-	test.Equal(t,"dev",config.Cluster)
-	test.Equal(t,"application",config.NamespaceName)
-	test.Equal(t,"localhost:8888",config.Ip)
+	test.Equal(t,"test",config.Zk)
 }
-
-//func TestCreateAppConfigWithJsonWrongEnv(t *testing.T) {
-//	jsonStr:=`{
-//    "appId": "test",
-//    "cluster": "joe",
-//    "namespaceName": "application",
-//    "ip": "localhost:8888",
-//    "releaseKey": ""
-//	}`
-//	config,err:=createAppConfigWithJson(jsonStr)
-//	t.Log(config)
-//	t.Log(err)
-//
-//	test.NotNil(t,err)
-//	test.Nil(t,config)
-//	test.StartWith(t,"Env is wrong ,current env:joe",err.Error())
-//}
 
 func TestCreateAppConfigWithJsonError(t *testing.T) {
 	jsonStr:=`package agollo
@@ -90,7 +67,7 @@ import (
 
 func TestCreateAppConfigWithJsonDefault(t *testing.T) {
 	jsonStr:=`{
-    "appId": "testDefault",
+    "zk": "joe",
     "ip": "localhost:9999"
 	}`
 	config,err:=createAppConfigWithJson(jsonStr)
@@ -98,8 +75,5 @@ func TestCreateAppConfigWithJsonDefault(t *testing.T) {
 
 	test.Nil(t,err)
 	test.NotNil(t,config)
-	test.Equal(t,"testDefault",config.AppId)
-	test.Equal(t,"default",config.Cluster)
-	test.Equal(t,"application",config.NamespaceName)
-	test.Equal(t,"localhost:9999",config.Ip)
+	test.Equal(t,"joe",config.Zk)
 }

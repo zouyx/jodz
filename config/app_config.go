@@ -10,11 +10,7 @@ var (
 )
 
 type AppConfig struct {
-	AppId string `json:"appId"`
-	Cluster string `json:"cluster"`
-	NamespaceName string `json:"namespaceName"`
-	Ip string `json:"ip"`
-	NextTryConnTime int64 `json:"-"`
+	Zk string `json:"zk"`
 }
 
 

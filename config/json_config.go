@@ -7,11 +7,6 @@ import (
 	"github.com/jodz/utils"
 )
 
-var(
-	default_cluster="default"
-	default_namespace="application"
-)
-
 func loadJsonConfig(fileName string) (*AppConfig,error) {
 	fs, err := ioutil.ReadFile(fileName)
 	if err != nil {
@@ -29,8 +24,6 @@ func loadJsonConfig(fileName string) (*AppConfig,error) {
 
 func createAppConfigWithJson(str string) (*AppConfig,error) {
 	appConfig:=&AppConfig{
-		Cluster:default_cluster,
-		NamespaceName:default_namespace,
 	}
 	err:=json.Unmarshal([]byte(str),appConfig)
 	if utils.IsNotNil(err) {
