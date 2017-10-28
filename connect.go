@@ -42,20 +42,20 @@ func createParentNode() {
 	s, e := conn.Create(prefix, []byte(""),0, zk.WorldACL(zk.PermAll))
 
 	if utils.IsNotNil(e){
-		seelog.Error("Connect zk Server Fail,Error:",e)
+		seelog.Warn("Connect zk Server Fail,Error:",e)
 		return
 	}
 
-	seelog.Info("return str:"+s)
+	seelog.Info("create msg:"+s)
 
 	s, e = conn.Create(jobScheduler, []byte(""),0, zk.WorldACL(zk.PermAll))
 
 	if utils.IsNotNil(e){
-		seelog.Error("Connect zk Server Fail,Error:",e)
+		seelog.Warn("Connect zk Server Fail,Error:",e)
 		return
 	}
 
-	seelog.Info("return str:"+s)
+	seelog.Info("create msg:"+s)
 }
 
 func CreateNode(jobName string){
