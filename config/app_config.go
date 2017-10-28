@@ -1,8 +1,8 @@
-package jodz
+package config
 
 import (
-	"github.com/jodz/utils"
 	"strings"
+	"github.com/zouyx/jodz/utils"
 )
 
 const appConfigFileName  ="app.properties"
@@ -13,7 +13,7 @@ var (
 
 )
 
-func getAppConfig() *AppConfig {
+func GetAppConfig() *AppConfig {
 	return appConfig
 }
 

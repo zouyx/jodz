@@ -1,9 +1,9 @@
-package jodz
+package config
 
 import (
 	"testing"
-	"github.com/jodz/test"
 	"container/list"
+	"github.com/zouyx/jodz/test"
 )
 
 func TestLoadJsonConfig(t *testing.T) {

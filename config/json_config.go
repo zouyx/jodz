@@ -1,10 +1,10 @@
-package jodz
+package config
 
 import (
 	"io/ioutil"
 	"encoding/json"
 	"errors"
-	"github.com/jodz/utils"
+	"github.com/zouyx/jodz/utils"
 )
 
 func loadJsonConfig(fileName string) (*AppConfig,error) {

@@ -1,4 +1,4 @@
-package agollo
+package jodz
 
 import (
 	"github.com/cihub/seelog"

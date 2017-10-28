@@ -1,4 +1,4 @@
-package registry
+package jodz
 
 type JobScheduler interface {
 	RunTask()

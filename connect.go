@@ -1,10 +1,10 @@
-package server
+package jodz
 
 import (
-	"github.com/jodz/config"
 	"github.com/samuel/go-zookeeper/zk"
 	"time"
-	"github.com/jodz/utils"
+	"github.com/zouyx/jodz/config"
+	"github.com/zouyx/jodz/utils"
 )
 const(
 	prefix="/jodz"

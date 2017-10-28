@@ -1,6 +1,6 @@
-package registry
+package jodz
 
-import "github.com/jodz/utils"
+import "github.com/zouyx/jodz/utils"
 
 var(
 	jobMap map[string]JobScheduler
