@@ -1,5 +1,9 @@
 package config
 
+import (
+	"github.com/jodz/utils"
+	"strings"
+)
 
 const appConfigFileName  ="app.properties"
 
@@ -11,6 +15,21 @@ var (
 
 type AppConfig struct {
 	Zk string `json:"zk"`
+	zkIps []string
+}
+
+func (this *AppConfig)GetZkIps() []string {
+	if utils.IsNotNil(this.zkIps){
+		return this.zkIps
+	}
+
+	if utils.IsEmpty(this.Zk){
+		return []string{}
+	}
+
+	this.zkIps=strings.Split(this.Zk,",")
+
+	return this.zkIps
 }
 
 

@@ -3,6 +3,7 @@ package config
 import (
 	"testing"
 	"github.com/jodz/test"
+	"container/list"
 )
 
 func TestLoadJsonConfig(t *testing.T) {
@@ -76,4 +77,17 @@ func TestCreateAppConfigWithJsonDefault(t *testing.T) {
 	test.Nil(t,err)
 	test.NotNil(t,config)
 	test.Equal(t,"joe",config.Zk)
+}
+
+func TestAppConfig_GetZkIps(t *testing.T) {
+	config := AppConfig{Zk: "joe,kkk"}
+	ips := config.GetZkIps()
+
+	ipList:=list.New()
+	for _,v := range ips{
+		ipList.PushBack(v)
+	}
+
+
+	test.HasStringItems(ipList,"joe",t)
 }
