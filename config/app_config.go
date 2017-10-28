@@ -1,4 +1,4 @@
-package config
+package jodz
 
 import (
 	"github.com/jodz/utils"
@@ -12,6 +12,10 @@ var (
 	appConfig *AppConfig
 
 )
+
+func getAppConfig() *AppConfig {
+	return appConfig
+}
 
 type AppConfig struct {
 	Zk string `json:"zk"`

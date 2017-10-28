@@ -1,4 +1,4 @@
-package config
+package jodz
 
 import (
 	"io/ioutil"
