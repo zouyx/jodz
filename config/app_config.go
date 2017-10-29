@@ -19,6 +19,7 @@ func GetAppConfig() *AppConfig {
 
 type AppConfig struct {
 	Zk string `json:"zk"`
+	Jobs string `json:"jobs"`
 	zkIps []string
 }
 

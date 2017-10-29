@@ -6,27 +6,24 @@ import (
 	"github.com/zouyx/jodz/config"
 	"github.com/zouyx/jodz/utils"
 	"github.com/cihub/seelog"
-)
-const(
-	prefix="/jodz"
-
-	jobScheduler=prefix+"/jobScheduler"
-
-
+	"fmt"
+	"strings"
 )
 
 var(
 	conn *zk.Conn
-
-	ip=jobScheduler+"/"+utils.GetInternal()
 )
+
+type Job struct {
+	JobName string `json:"jobName"`
+}
 
 func init() {
 	//fist establishes connection
 	connect(config.GetAppConfig())
 
 	//init node
-	createParentNode()
+	createParentNode(config.GetAppConfig())
 }
 
 func connect(appConfig *config.AppConfig)  {
@@ -37,32 +34,51 @@ func connect(appConfig *config.AppConfig)  {
 	}
 }
 
-func createParentNode() {
+func createParentNode(appConfig *config.AppConfig) {
 
-	s, e := conn.Create(prefix, []byte(""),0, zk.WorldACL(zk.PermAll))
-
-	if utils.IsNotNil(e){
-		seelog.Warn("Connect zk Server Fail,Error:",e)
-		return
+	if utils.IsEmpty(appConfig.Jobs){
+		panic("jobs must config!example: job1(name),jobs2(name)")
 	}
 
-	seelog.Info("create msg:"+s)
+	jobs := strings.Split(appConfig.Jobs, comma)
 
-	s, e = conn.Create(jobScheduler, []byte(""),0, zk.WorldACL(zk.PermAll))
+	//init parent nodes
+	for _,node:=range parentNodes {
+		s, e := conn.Create(node, []byte(""),0, zk.WorldACL(zk.PermAll))
 
-	if utils.IsNotNil(e){
-		seelog.Warn("Connect zk Server Fail,Error:",e)
-		return
+		if utils.IsNotNil(e){
+			seelog.Warnf("Connect zk Server Fail,node:%s,Error:%s,",node,e)
+			continue
+		}
+
+		seelog.Infof("create node:%s success! msg:%s",node,s)
 	}
 
-	seelog.Info("create msg:"+s)
+	//init job nodes
+	for _,node:=range jobs {
+		s, e := conn.Create(getNodeName(jobTemplate,node), []byte(""),0, zk.WorldACL(zk.PermAll))
+
+		if utils.IsNotNil(e){
+			seelog.Warnf("Connect zk Server Fail,node:%s,Error:%s,",node,e)
+			continue
+		}
+
+		seelog.Infof("create node:%s success! msg:%s",node,s)
+	}
 }
 
-func CreateNode(jobName string){
-	s, e := conn.Create(ip, []byte(""), zk.FlagEphemeral,zk.WorldACL(zk.PermAll))
+//get node by template and jobName
+func getNodeName(template,jobName string) string{
+	return fmt.Sprintf(template,jobName)
+}
+
+func CreateJobNode(jobName string){
+	node := getNodeName(ipTemplate, jobName)
+
+	s, e := conn.Create(node, getJobInfo(jobName), zk.FlagEphemeral,zk.WorldACL(zk.PermAll))
 
 	if utils.IsNotNil(e){
-		seelog.Error("Connect zk Server Fail,Error:",e)
+		seelog.Warnf("Connect zk Server Fail,node:%s,Error:%s,",node,e)
 		return
 	}
 

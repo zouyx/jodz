@@ -3,10 +3,17 @@ package jodz
 import (
 	"testing"
 	"time"
+	"github.com/zouyx/jodz/test"
 )
 
 func TestCreateNode(t *testing.T) {
-	CreateNode("zou")
+	joeName := "zou"
+	CreateJobNode(joeName)
 
-	time.Sleep(50*time.Second)
+	time.Sleep(2*time.Second)
+
+	bytes, _, e := conn.Get(getNodeName(ipTemplate, joeName))
+
+	test.Equal(t,`{"jobName":"zou"}`,string(bytes))
+	test.Nil(t,e)
 }
