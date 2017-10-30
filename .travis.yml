@@ -10,7 +10,6 @@ env:
 
 before_install:
     - go get github.com/mattn/goveralls
-    - Project=apollo
     - export ZOOKEEPER_VERSION="3.4.10"
     - wget http://www.eu.apache.org/dist/zookeeper/zookeeper-$ZOOKEEPER_VERSION/zookeeper-$ZOOKEEPER_VERSION.tar.gz
     - tar xf zookeeper-$ZOOKEEPER_VERSION.tar.gz
@@ -24,4 +23,4 @@ install:
 script:
     - chmod u+x coverage.sh
     - ./coverage.sh --coveralls
-    - go build -o "$Project"
+    - go build -o "jodz"
