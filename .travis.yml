@@ -18,12 +18,9 @@ before_install:
 
 install:
     - go get github.com/cihub/seelog
-#    - go get github.com/samuel/go-zookeeper
+    - go get github.com/samuel/go-zookeeper/zk
 
 script:
-    - ls -l $HOME/gopath/src/github.com/samuel/go-zookeeper
-    - pwd
-    - ls -l
     - chmod u+x coverage.sh
     - ./coverage.sh --coveralls
-#    - go build -o "jodz"
+    - go build -o "jodz"
