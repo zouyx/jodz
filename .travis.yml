@@ -1,0 +1,27 @@
+language: go
+sudo: required
+
+go:
+  - 1.7
+  - 1.8
+
+env:
+    - GO15VENDOREXPERIMENT="1"
+    - ZOOKEEPER_VERSION="3.4.10"
+
+before_install:
+    - go get github.com/mattn/goveralls
+    - Project=apollo
+    - wget http://www.eu.apache.org/dist/zookeeper/zookeeper-$ZOOKEEPER_VERSION/zookeeper-$ZOOKEEPER_VERSION.tar.gz
+    - tar xf zookeeper-$ZOOKEEPER_VERSION.tar.gz
+    - mv zookeeper-$ZOOKEEPER_VERSION/conf/zoo_sample.cfg zookeeper-$ZOOKEEPER_VERSION/conf/zoo.cfg
+    - ./zookeeper-$ZOOKEEPER_VERSION/bin/zkServer.sh start
+
+install:
+    - go get github.com/cihub/seelog
+    - go get github.com/samuel/go-zookeeper
+
+script:
+    - chmod u+x coverage.sh
+    - ./coverage.sh --coveralls
+    - go build -o "$Project"
