@@ -18,8 +18,8 @@ before_install:
 
 install:
     - go get github.com/cihub/seelog
-    - go get github.com/samuel/go-zookeeper
-    
+#    - go get github.com/samuel/go-zookeeper
+
 script:
     - ls -l $HOME/gopath/src/github.com/samuel/go-zookeeper
     - pwd
