@@ -7,11 +7,11 @@ go:
 
 env:
     - GO15VENDOREXPERIMENT="1"
-    - ZOOKEEPER_VERSION="3.4.10"
 
 before_install:
     - go get github.com/mattn/goveralls
     - Project=apollo
+    - export ZOOKEEPER_VERSION="3.4.10"
     - wget http://www.eu.apache.org/dist/zookeeper/zookeeper-$ZOOKEEPER_VERSION/zookeeper-$ZOOKEEPER_VERSION.tar.gz
     - tar xf zookeeper-$ZOOKEEPER_VERSION.tar.gz
     - mv zookeeper-$ZOOKEEPER_VERSION/conf/zoo_sample.cfg zookeeper-$ZOOKEEPER_VERSION/conf/zoo.cfg
