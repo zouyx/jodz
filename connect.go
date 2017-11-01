@@ -26,6 +26,7 @@ func init() {
 	createParentNode(config.GetAppConfig())
 }
 
+//do connect with app config
 func connect(appConfig *config.AppConfig)  {
 	var err error
 	conn,_,err=zk.Connect(appConfig.GetZkIps(), time.Second) //*10)
@@ -34,6 +35,7 @@ func connect(appConfig *config.AppConfig)  {
 	}
 }
 
+//create job's parent node for create job node
 func createParentNode(appConfig *config.AppConfig) {
 
 	if utils.IsEmpty(appConfig.Jobs){
@@ -72,6 +74,7 @@ func getNodeName(template,jobName string) string{
 	return fmt.Sprintf(template,jobName)
 }
 
+//create job node in zk by job name
 func CreateJobNode(jobName string){
 	node := getNodeName(ipTemplate, jobName)
 
@@ -83,4 +86,9 @@ func CreateJobNode(jobName string){
 	}
 
 	seelog.Info("return str:"+s)
+}
+
+// get zk connection
+func getConn() *zk.Conn{
+	return conn
 }
