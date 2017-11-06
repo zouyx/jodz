@@ -7,7 +7,6 @@ import (
 	"github.com/zouyx/jodz/utils"
 	"github.com/cihub/seelog"
 	"fmt"
-	"strings"
 )
 
 var(
@@ -38,27 +37,9 @@ func connect(appConfig *config.AppConfig)  {
 //create job's parent node for create job node
 func createParentNode(appConfig *config.AppConfig) {
 
-	if utils.IsEmpty(appConfig.Jobs){
-		panic("jobs must config!example: job1(name),jobs2(name)")
-	}
-
-	jobs := strings.Split(appConfig.Jobs, comma)
-
 	//init parent nodes
 	for _,node:=range parentNodes {
 		s, e := conn.Create(node, []byte(""),0, zk.WorldACL(zk.PermAll))
-
-		if utils.IsNotNil(e){
-			seelog.Warnf("Connect zk Server Fail,node:%s,Error:%s,",node,e)
-			continue
-		}
-
-		seelog.Infof("create node:%s success! msg:%s",node,s)
-	}
-
-	//init job nodes
-	for _,node:=range jobs {
-		s, e := conn.Create(getNodeName(jobTemplate,node), []byte(""),0, zk.WorldACL(zk.PermAll))
 
 		if utils.IsNotNil(e){
 			seelog.Warnf("Connect zk Server Fail,node:%s,Error:%s,",node,e)

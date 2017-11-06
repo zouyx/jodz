@@ -3,19 +3,24 @@ package jodz
 import (
 	"github.com/cihub/seelog"
 	"github.com/samuel/go-zookeeper/zk"
-	"github.com/zouyx/jodz/config"
 )
 
 func init() {
-	appConfig := config.GetAppConfig()
-
 	//init node for config
-	for _,jobNode := range appConfig.GetJobNodes() {
+	for jobName,jobNode := range GetJobNodes() {
 		//create job node
-		CreateJobNode(jobNode)
+		CreateJobNode(jobName)
+
+		var succCb func(zk.Event, []byte)
+		var failCb func(error)
+
+		if jobNode==nil{
+			succCb= jobNode.SuccessCallBack
+			failCb= jobNode.FailCallBack
+		}
 
 		//watch job node
-		go watchJob(jobNode,nil,nil)
+		go watchJob(jobName, succCb,failCb)
 	}
 }
 

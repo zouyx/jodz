@@ -19,9 +19,7 @@ func GetAppConfig() *AppConfig {
 
 type AppConfig struct {
 	Zk string `json:"zk"`
-	Jobs string `json:"jobs"`
 	zkIps []string
-	jobNodes []string
 }
 
 func (this *AppConfig)GetZkIps() []string {
@@ -32,16 +30,6 @@ func (this *AppConfig)GetZkIps() []string {
 	this.zkIps=this.cutString(this.Zk)
 
 	return this.zkIps
-}
-
-func (this *AppConfig)GetJobNodes() []string {
-	if utils.IsNotNil(this.jobNodes){
-		return this.jobNodes
-	}
-
-	this.jobNodes=this.cutString(this.Jobs)
-
-	return this.jobNodes
 }
 
 func (this *AppConfig)cutString(str string) []string {

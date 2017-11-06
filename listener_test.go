@@ -7,7 +7,31 @@ import (
 	"github.com/samuel/go-zookeeper/zk"
 )
 
+type JoeJobScheduler struct {
+
+}
+
+func (this JoeJobScheduler)SuccessCallBack(e zk.Event, b []byte) {
+	seelog.Info("data:",string(b))
+	seelog.Info("event:",e)
+}
+
+func (this JoeJobScheduler)FailCallBack(e error) {
+	seelog.Info("error:",e)
+}
+
+func (this JoeJobScheduler)RunTask() {
+}
+
+
 func TestWatchJob(t *testing.T) {
+	scheduler := &JoeJobScheduler{}
+
+	RegistryJob("joe",scheduler)
+
+	RegistryAllJobs()
+
+
 	jobName := getNodeName(jobTemplate, "joe")
 
 	go setData(jobName)
